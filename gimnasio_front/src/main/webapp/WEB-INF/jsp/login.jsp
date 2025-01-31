@@ -3,53 +3,95 @@
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 
 <c:set var="contextPath" value="${pageContext.request.contextPath}"/>
-
-<!DOCTYPE html>
 <html lang="en">
 <head>
+    <title>GOLD Temper</title>
     <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
-    <meta name="description" content="">
-    <meta name="author" content="">
-
-    <title>Log in with your account</title>
-
-    <link href="${contextPath}/resources/css/bootstrap.min.css" rel="stylesheet">
-    <link href="${contextPath}/resources/css/common.css" rel="stylesheet">
-
-    <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
-    <!--[if lt IE 9]>
-    <script src="https://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>
-    <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
-    <![endif]-->
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=0, minimal-ui">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="description" content="#">
+    <meta name="keywords"
+        content="Admin , Responsive, Landing, Bootstrap, App, Template, Mobile, iOS, Android, apple, creative app">
+    <meta name="author" content="#">
+    <!-- Favicon icon -->
+     <!-- Required Fremwork -->
+    <link rel="stylesheet" type="text/css" href="${contextPath}/bower_components/bootstrap/dist/css/bootstrap.min.css">
+    <!-- themify-icons line icon -->
+    <link rel="stylesheet" type="text/css" href="${contextPath}/assets/icon/themify-icons/themify-icons.css">
+    <!-- ico font -->
+    <link rel="stylesheet" type="text/css" href="${contextPath}/assets/icon/ico-font/css/icofont.css">
+    <!-- Style.css -->
+    <link rel="stylesheet" type="text/css" href="${contextPath}/assets/css/style.css">
 </head>
 
-<body>
+    <section class="login-block">
+        <!-- Container-fluid starts -->
+        <div class="container">
+            <div class="row">
+                <div class="col-sm-12">
+                    <!-- Authentication card start -->
 
-<div class="container">
-
-    <form method="POST" action="${contextPath}/login" class="form-signin">
-        <h2 class="form-heading">Log in</h2>
-
-        <div class="form-group ${error != null ? 'has-error' : ''}">
-            <span>${message}</span>
-            <input name="username" type="text" class="form-control" placeholder="Username"
-                   autofocus="true"/>
-            <input name="password" type="password" class="form-control" placeholder="Password"/>
-            <span>${error}</span>
-            <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
-
-            <button class="btn btn-lg btn-primary btn-block" type="submit">Log In</button>
-            <h4 class="text-center"><a href="${contextPath}/registration">Create an account</a></h4>
+                    <form  method="POST" action="${contextPath}/iniciarSesion" class="md-float-material form-material">
+                        
+                        <div class="auth-box card">
+                            <div class="card-block">
+                            
+                                <div class="row m-b-20">
+                                    <div class="col-md-12">
+                                      <h3 class="text-center">Login</h3>
+                                    </div>
+                                </div>
+                                <div class="mb-3 form-primary">
+                                    <input type="text" name="nick" class="form-control" required=""
+                                        placeholder="Nick">
+                                    <span class="form-bar"></span>
+                                </div>
+                                <div class="mb-3 form-primary">
+                                    <input type="password" name="password" class="form-control" required=""
+                                        placeholder="Password">
+                                    <span class="form-bar"></span>
+                                </div>
+                                <div class="row m-t-25 text-start">
+                                </div>
+                                <div class="row m-t-30">
+                                    <div class="col-md-12">
+                                        <div class="d-grid">
+                                            <button type="submit" class="btn btn-primary btn-md waves-effect waves-light text-center m-b-20">
+                                                Iniciar sesión
+                                            </button>
+                                        </div>
+                                    </div>
+                                </div>
+                                
+                            </div>
+                        </div>
+                    </form>
+                    <!-- end of form -->
+                </div>
+                <!-- end of col-sm-12 -->
+            </div>
+            <!-- end of row -->
         </div>
-
-    </form>
-
-</div>
-<!-- /container -->
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
-<script src="${contextPath}/resources/js/bootstrap.min.js"></script>
+        <!-- end of container-fluid -->
+    </section>
+  
+    <script type="text/javascript" src="${contextPath}/bower_components/jquery/dist/jquery.min.js"></script>
+    <script type="text/javascript" src="${contextPath}/bower_components/jquery-ui/jquery-ui.min.js"></script>
+    <script type="text/javascript" src="${contextPath}/bower_components/popper.js/dist/umd/popper.min.js"></script>
+    <script type="text/javascript" src="${contextPath}/bower_components/bootstrap/dist/js/bootstrap.min.js"></script>
+    <!-- jquery slimscroll js -->
+    <script type="text/javascript" src="${contextPath}/bower_components/jquery-slimscroll/jquery.slimscroll.js"></script>
+    <!-- modernizr js -->
+    <script type="text/javascript" src="${contextPath}/bower_components/modernizr/modernizr.js"></script>
+    <script type="text/javascript" src="${contextPath}/bower_components/modernizr/feature-detects/css-scrollbars.js"></script>
+    <!-- i18next.min.js -->
+    <script type="text/javascript" src="${contextPath}/bower_components/i18next/i18next.min.js"></script>
+    <script type="text/javascript"
+        src="${contextPath}/bower_components/i18next-xhr-backend/i18nextXHRBackend.min.js"></script>
+    <script type="text/javascript"
+        src="${contextPath}/bower_components/i18next-browser-languagedetector/i18nextBrowserLanguageDetector.min.js"></script>
+    <script type="text/javascript" src="${contextPath}/bower_components/jquery-i18next/jquery-i18next.min.js"></script>
+    <script type="text/javascript" src="${contextPath}/assets/js/common-pages.js"></script>
 </body>
+
 </html>
