@@ -2,9 +2,10 @@ package com.aoro.gimnasio.config.controller.response;
 
 import java.util.Collection;
 import java.util.Date;
-import java.util.List;
 
 import org.springframework.security.core.GrantedAuthority;
+
+import com.aoro.gimnasio.negocio.entity.Usuario;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -21,4 +22,7 @@ public class AuthenticationResponse {
     private String token;
     private Date expired;
     private Collection<? extends GrantedAuthority> roles;
+    private String rol;
+    private Usuario usuario;
+    
 }

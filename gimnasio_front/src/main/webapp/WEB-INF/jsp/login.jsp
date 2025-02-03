@@ -7,6 +7,7 @@
 <head>
     <title>GOLD Temper</title>
     <meta charset="utf-8">
+    <meta http-equiv="Cache-Control" content="no-cache">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=0, minimal-ui">
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="description" content="#">
@@ -31,7 +32,7 @@
                 <div class="col-sm-12">
                     <!-- Authentication card start -->
 
-                    <form  method="POST" action="${contextPath}/iniciarSesion" class="md-float-material form-material">
+                    <form  method="POST" action="${contextPath}/login" class="md-float-material form-material">
                         
                         <div class="auth-box card">
                             <div class="card-block">
@@ -43,12 +44,12 @@
                                 </div>
                                 <div class="mb-3 form-primary">
                                     <input type="text" name="nick" class="form-control" required=""
-                                        placeholder="Nick">
+                                        placeholder="Nick" id="nick">
                                     <span class="form-bar"></span>
                                 </div>
                                 <div class="mb-3 form-primary">
                                     <input type="password" name="password" class="form-control" required=""
-                                        placeholder="Password">
+                                        placeholder="Password" id="password">
                                     <span class="form-bar"></span>
                                 </div>
                                 <div class="row m-t-25 text-start">
@@ -56,7 +57,7 @@
                                 <div class="row m-t-30">
                                     <div class="col-md-12">
                                         <div class="d-grid">
-                                            <button type="submit" class="btn btn-primary btn-md waves-effect waves-light text-center m-b-20">
+                                            <button type="button" onclick="login()" class="btn btn-primary btn-md waves-effect waves-light text-center m-b-20">
                                                 Iniciar sesión
                                             </button>
                                         </div>
@@ -70,6 +71,14 @@
                 </div>
                 <!-- end of col-sm-12 -->
             </div>
+            
+            <div>
+            Admin:
+            nick: aoro
+            pass: Oroangel1712
+            
+            </div>
+            
             <!-- end of row -->
         </div>
         <!-- end of container-fluid -->
@@ -92,6 +101,34 @@
         src="${contextPath}/bower_components/i18next-browser-languagedetector/i18nextBrowserLanguageDetector.min.js"></script>
     <script type="text/javascript" src="${contextPath}/bower_components/jquery-i18next/jquery-i18next.min.js"></script>
     <script type="text/javascript" src="${contextPath}/assets/js/common-pages.js"></script>
+    <script type="text/javascript">
+    
+    if (this.current = this.imgsLen - 1) {
+        $(':button:contains("previous")').attr('disabled', 'disabled');
+    }
+    
+    function login(){
+    	var jsonData={"nick":$('#nick').val(), "password" : $('#password').val()};
+    	$.ajax({
+    	    url: '${contextPath}/iniciarSesion',
+    	    type: 'POST',
+    	    data: JSON.stringify(jsonData),
+    	    dataType: 'json',
+            contentType: 'application/json',
+    	    success: function (response) {
+    	       if(response.codigo==0){
+    	    	   window.location.href = "${contextPath}/welcome";
+    	       }
+    	    },
+    	    error: function () {
+    	        alert("error");
+    	    }
+    	}); 
+    	
+    }
+    
+    
+    </script>
 </body>
 
 </html>

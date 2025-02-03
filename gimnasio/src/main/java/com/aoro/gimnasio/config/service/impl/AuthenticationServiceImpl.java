@@ -138,6 +138,14 @@ public class AuthenticationServiceImpl implements AuthenticationService {
 	                .build();
 	}
 
+	public Usuario detalleUsuario(AuthenticationRequest request) {
+		Optional<Usuario> optUser=userRepository.findByNick(request.getNick());
+		Usuario u=optUser.get();
+		u.getRoles().stream().forEach(rol -> u.setRol(rol.getNombre()));
+		
+		
+	return u;
+	}
 	public boolean eliminar(RegisterRequest request) {
 		Optional<Usuario> usuario=userRepository.findById(request.getId());
 		Usuario ubaja=usuario.get();

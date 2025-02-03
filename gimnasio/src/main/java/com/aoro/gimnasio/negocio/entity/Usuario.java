@@ -16,6 +16,7 @@ import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.Table;
+import javax.persistence.Transient;
 
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
@@ -38,7 +39,7 @@ public class Usuario implements UserDetails {
 
 	public Usuario(Long id, String nombre, String apaterno, String amaterno, String password, String nick,
 			Integer intentos, Date fecha_alta, Date fecha_modificacion, String img_url, Integer activo,
-			Set<Rol> roles) {
+			Set<Rol> roles,String rol) {
 		super();
 		this.id = id;
 		this.nombre = nombre;
@@ -52,6 +53,7 @@ public class Usuario implements UserDetails {
 		this.img_url = img_url;
 		this.activo = activo;
 		this.roles = roles;
+		this.rol=rol;
 	}
 
 	@Id
@@ -67,6 +69,7 @@ public class Usuario implements UserDetails {
     private Date fecha_modificacion;
     private String img_url;
     private Integer activo;
+ 
 
     @ManyToMany(fetch = FetchType.EAGER, cascade = {CascadeType.PERSIST, CascadeType.MERGE})
     @JoinTable(
@@ -75,7 +78,10 @@ public class Usuario implements UserDetails {
             inverseJoinColumns = @JoinColumn(name = "id_rol")
     )
     private Set<Rol> roles = new HashSet<>();
-
+    
+    @Transient
+    private String rol;
+    
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
         return roles.stream()

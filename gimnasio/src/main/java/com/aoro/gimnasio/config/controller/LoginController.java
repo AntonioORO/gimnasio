@@ -29,6 +29,8 @@ public class LoginController {
 
 		try {
 			responseAuth = userServiceImpl.authenticate(request);
+			responseAuth.setUsuario(userServiceImpl.detalleUsuario(request));
+			
 			response.setCodigo(Constants.COD_SUCCESS);
 			response.setMessage(Constants.MSG_SUCCESS);
 			response.setData(responseAuth);
