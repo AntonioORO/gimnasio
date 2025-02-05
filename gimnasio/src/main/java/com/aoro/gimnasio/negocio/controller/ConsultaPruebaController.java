@@ -18,7 +18,6 @@ public class ConsultaPruebaController {
 
 	@PreAuthorize("hasRole('ROLE_ADMIN')")
     @GetMapping("/test")
-  
     public ResponseEntity<String> allUsers() {
         return ResponseEntity.ok(consultaPruebaService.prueba());
     }

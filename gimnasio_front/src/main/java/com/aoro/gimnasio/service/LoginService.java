@@ -47,6 +47,7 @@ public class LoginService {
 			}
 			
 			session.setAttribute("logged", true);
+			session.setAttribute("token", auth.getToken());
 			session.setAttribute("user", auth.getUsuario());
 
 		}

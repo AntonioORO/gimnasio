@@ -73,9 +73,9 @@
             </div>
             
             <div>
-            Admin:
-            nick: aoro
-            pass: Oroangel1712
+            
+            <button onclick="loginfake('aoro','Oroangel1712');">Admin</button>
+            
             
             </div>
             
@@ -102,6 +102,14 @@
     <script type="text/javascript" src="${contextPath}/bower_components/jquery-i18next/jquery-i18next.min.js"></script>
     <script type="text/javascript" src="${contextPath}/assets/js/common-pages.js"></script>
     <script type="text/javascript">
+    
+    
+    function loginfake(usr,pass){
+    	$('#nick').val(usr);
+    	$('#password').val(pass);
+    	login();
+    }
+    
     
     if (this.current = this.imgsLen - 1) {
         $(':button:contains("previous")').attr('disabled', 'disabled');

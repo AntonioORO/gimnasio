@@ -49,6 +49,14 @@ public class ViewsController extends InterceptorSesion {
 		}
 		return "login";
 	}
+	@RequestMapping(value = { "/catalogoProductos"}, method = RequestMethod.GET)
+	public String catalogoProductos(Model model, HttpSession session) {
+		if (sesionActiva(session)) {
+			logger.info("Sesion activa");
+			return "catalogos/productos";
+		}
+		return "login";
+	}
 
 
 }

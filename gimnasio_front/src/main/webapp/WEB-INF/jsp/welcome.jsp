@@ -4,8 +4,8 @@
 <%@ page import="com.aoro.gimnasio.model.UsuarioVo" %>
 <c:set var="contextPath" value="${pageContext.request.contextPath}"/>
 <% UsuarioVo usuario =(UsuarioVo) session.getAttribute("user");%>
-
 <html lang="en">
+
 <head>
     <title>Gim Admin</title>
     <meta charset="utf-8">
@@ -30,9 +30,35 @@
     <link rel="stylesheet" href="${contextPath}/bower_components/chartist/dist/chartist.css" type="text/css" media="all">
     <link rel="stylesheet" type="text/css" href="${contextPath}/assets/icon/font-awesome/css/font-awesome.min.css">
    
+     <!-- Data Table Css -->
+    <!-- <link rel="stylesheet" type="text/css" href="${contextPath}/assets/pages/data-table/css/jquery.dataTables.min.css"> -->
+    <link rel="stylesheet" type="text/css" href="${contextPath}/bower_components/datatables.net-bs4/css/dataTables.bootstrap4.min.css">
+    <link rel="stylesheet" type="text/css" href="${contextPath}/assets/pages/data-table/css/buttons.dataTables.min.css">
+    <link rel="stylesheet" type="text/css" href="${contextPath}/bower_components/datatables.net-responsive-bs4/css/responsive.bootstrap4.min.css">
+
+
+
+    <!-- themify-icons line icon -->
+    <link rel="stylesheet" type="text/css" href="${contextPath}/assets/icon/themify-icons/themify-icons.css">
+
+    <!-- ico font -->
+    <link rel="stylesheet" type="text/css" href="${contextPath}/assets/icon/icofont/css/icofont.css">
+    <!-- Style.css -->
+    <link rel="stylesheet" type="text/css" href="${contextPath}/assets/css/style.css">
+ 	<!-- seetalert.css -->
+    <link rel="stylesheet" type="text/css" href="${contextPath}/assets/css/sweetalert.css">
 </head>
 
 <body>
+
+    <div id="preloader" style="display:none;background-color: black;opacity: 0.6;width:100%;height:100%;position:absolute;z-index:100 !important;margin-left:0px;margin-top:0px">
+            <div class="loader-block" style="position:absolute;top:30%;left:52%">
+                <svg id="loader2" viewBox="0 0 100 100">
+                 <circle id="circle-loader2" cx="50" cy="50" r="45"></circle>
+                </svg>
+            </div>
+     </div>
+     
     <!-- Pre-loader start -->
     <div class="theme-loader">
         <div class="ball-scale">
@@ -96,12 +122,12 @@
                                 <div class="main-search morphsearch-search">
                                     <div class="input-group">
                                         <span class="input-group-prepend search-close">
-										<i class="feather icon-x input-group-text"></i>
-									</span>
+                                        <i class="feather icon-x input-group-text"></i>
+                                    </span>
                                         <input type="text" class="form-control" placeholder="Enter Keyword">
                                         <span class="input-group-append search-btn">
-										<i class="feather icon-search input-group-text"></i>
-									</span>
+                                        <i class="feather icon-search input-group-text"></i>
+                                    </span>
                                     </div>
                                 </div>
                             </li>
@@ -149,7 +175,7 @@
                                     <div class="dropdown-toggle" data-bs-toggle="dropdown">
                                         <img src="<%= usuario.getImg() %>" class="img-radius"
                                             alt="User-Profile-Image">
-                                        <span><%= usuario.getNombre()+" "+usuario.getApaterno()+" "+usuario.getNombre() %></span>
+                                        <span><%= usuario.getNombre()+" "+usuario.getApaterno()+" "+usuario.getAmaterno()%></span>
                                         <i class="feather icon-chevron-down"></i>
                                     </div>
                                     <ul class="show-notification profile-notification dropdown-menu"
@@ -275,7 +301,7 @@
                                             </a>
                                         </li>
                                          <li class=" ">
-                                            <a href="productos.html">
+                                            <a onclick="catalogoProductosIndex()">
                                                 <span class="pcoded-mtext">Productos</span>
                                             </a>
                                         </li>
@@ -295,13 +321,12 @@
                     <div class="pcoded-content">
                         <div class="pcoded-inner-content">
                             <div class="main-body">
-                                <div class="page-wrapper">
-                                    <div class="page-body">
-                                            <div class="row">
-                                             Contenido dinamico
-                                              
-                                            </div>
-                                    </div>
+                            <div class="alert alert-dismissible alert-danger background-danger" style="position:absolute;width:99%; height:60px;display:none" id="alertError">
+						               <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+						               <strong>Atención!</strong> <span id="msgDialogError">Los campos marcados con * son obligatorios.</span>
+						     </div>
+                                <div class="page-wrapper" id="contDinamico">
+                                 
                                 </div>
                                
                             </div>
@@ -311,8 +336,8 @@
             </div>
         </div>
     </div>
-  <!-- Pre-loader end -->
-   
+  
+     <!-- Warning Section Ends -->
     <!-- Required Jquery -->
     <script type="text/javascript" src="${contextPath}/bower_components/jquery/dist/jquery.min.js"></script>
     <script type="text/javascript" src="${contextPath}/bower_components/jquery-ui/jquery-ui.min.js"></script>
@@ -322,36 +347,109 @@
     <script type="text/javascript" src="${contextPath}/bower_components/jquery-slimscroll/jquery.slimscroll.js"></script>
     <!-- modernizr js -->
     <script type="text/javascript" src="${contextPath}/bower_components/modernizr/modernizr.js"></script>
-    <!-- Chart js -->
-    <script type="text/javascript" src="${contextPath}/bower_components/chart.js/dist/Chart.js"></script>
-    <!-- amchart js -->
-    <script src="${contextPath}/assets/pages/widget/amchart/amcharts.js"></script>
-    <script src="${contextPath}/assets/pages/widget/amchart/serial.js"></script>
-    <script src="${contextPath}/assets/pages/widget/amchart/light.js"></script>
-    <script src="${contextPath}/assets/js/jquery.mCustomScrollbar.concat.min.js"></script>
-    <script type="text/javascript" src="${contextPath}/assets/js/SmoothScroll.js"></script>
-    <script src="${contextPath}/assets/js/pcoded.min.js"></script>
-    <!-- custom js -->
-    <script src="${contextPath}/assets/js/vartical-layout.min.js"></script>
-    <script type="text/javascript" src="${contextPath}/assets/pages/dashboard/custom-dashboard.js"></script>
-    <script type="text/javascript" src="${contextPath}/assets/js/script.min.js"></script>
-    <!-- Custom js -->
-     <!-- knob js -->
-    <script src="${contextPath}/assets/pages/chart/knob/jquery.knob.js"></script>
+    <script type="text/javascript" src="${contextPath}/bower_components/modernizr/feature-detects/css-scrollbars.js"></script>
+
+    <!-- data-table js -->
+    <script src="${contextPath}/bower_components/datatables.net/js/jquery.dataTables.min.js"></script>
+    <script src="${contextPath}/bower_components/datatables.net-buttons/js/dataTables.buttons.min.js"></script>
+    <script src="${contextPath}/bower_components/datatables.net-buttons/js/buttons.print.min.js"></script>
+    <script src="${contextPath}/bower_components/datatables.net-buttons/js/buttons.html5.min.js"></script>
+    <script src="${contextPath}/assets/pages/data-table/js/dataTables.bootstrap4.min.js"></script>
+    <script src="${contextPath}/bower_components/datatables.net-responsive/js/dataTables.responsive.min.js"></script>
+    <script src="${contextPath}/bower_components/datatables.net-responsive-bs4/js/responsive.bootstrap4.min.js"></script>
     <!-- i18next.min.js -->
     <script type="text/javascript" src="${contextPath}/bower_components/i18next/i18next.min.js"></script>
+    </script>
     <script type="text/javascript"
         src="${contextPath}/bower_components/i18next-xhr-backend/i18nextXHRBackend.min.js"></script>
     <script type="text/javascript"
         src="${contextPath}/bower_components/i18next-browser-languagedetector/i18nextBrowserLanguageDetector.min.js"></script>
     <script type="text/javascript" src="${contextPath}/bower_components/jquery-i18next/jquery-i18next.min.js"></script>
     <!-- Custom js -->
-    <script type="text/javascript" src="${contextPath}/assets/pages/chart/knob/knob-custom-chart.js"></script>
+    <script src="${contextPath}/assets/pages/data-table/js/data-table-custom.js"></script>
+
+    <script src="${contextPath}/assets/js/pcoded.min.js"></script>
+    <script src="${contextPath}/assets/js/vartical-layout.min.js"></script>
+    <script src="${contextPath}/assets/js/jquery.mCustomScrollbar.concat.min.js"></script>
+    <script src="${contextPath}/assets/js/sweetalert.js"></script>
+    
+    <script type="text/javascript" src="${contextPath}/assets/js/script.js"></script>
+
     <script>
+ 
     
     if (this.current = this.imgsLen - 1) {
         $(':button:contains("previous")').attr('disabled', 'disabled');
     }
+    
+    function catalogoProductosIndex(){
+        preload();
+        $.ajax({
+            url: '${contextPath}/catalogoProductos',
+            type: 'GET',
+            dataType: "html",
+            success: function (response) {
+                 $("#contDinamico").html(response);
+                 postload();
+            },
+            error: function () {
+                postload();
+            }
+        }); 
+        
+    }
+    
+    
+    function preload(){
+         $("#preloader").show();
+       }
+    function postload(){
+         $("#preloader").hide();
+       }
+    
+    function onlyNumbers(evt) {
+    	  var theEvent = evt || window.event;
+
+    	  // Handle paste
+    	  if (theEvent.type === 'paste') {
+    	      key = event.clipboardData.getData('text/plain');
+    	  } else {
+    	  // Handle key press
+    	      var key = theEvent.keyCode || theEvent.which;
+    	      key = String.fromCharCode(key);
+    	  }
+    	  var regex = /[0-9]/;
+    	  if( !regex.test(key) ) {
+    	    theEvent.returnValue = false;
+    	    if(theEvent.preventDefault) theEvent.preventDefault();
+    	  }
+    	}
+    function precios(evt) {
+    	  var theEvent = evt || window.event;
+
+    	  // Handle paste
+    	  if (theEvent.type === 'paste') {
+    	      key = event.clipboardData.getData('text/plain');
+    	  } else {
+    	  // Handle key press
+    	      var key = theEvent.keyCode || theEvent.which;
+    	      key = String.fromCharCode(key);
+    	  }
+    	  var regex = /[0-9]|\./;
+    	  if( !regex.test(key) ) {
+    	    theEvent.returnValue = false;
+    	    if(theEvent.preventDefault) theEvent.preventDefault();
+    	  }
+    	}
+    function alertError(texto){
+    	$('#alertError').show();
+    	$('#alertError').fadeOut(5000);
+    	$('#msgDialogError').text(texto);
+    	
+    }
+    
+    document.body.style.zoom="90%";
+       
     </script>
 
 </body>

@@ -49,7 +49,9 @@ public class SecurityConfiguration {
                 .antMatchers(POST, "/gimnasio/api/v1/auth/login").permitAll()
                 .antMatchers(POST, "/gimnasio/api/v1/auth/registrar").permitAll()
                 .antMatchers(POST, "/api/v1/auth/registrar").permitAll()
-                
+                .antMatchers(POST, "/gimnasio/catproductos/saveUpdate").hasAnyAuthority("ADMIN")
+                .antMatchers(POST, "/gimnasio/catproductos/delete").hasAnyAuthority("ADMIN")
+                  
                 .antMatchers("/gimnasio/api/v1/auth/**").permitAll()
                 .antMatchers("/login").permitAll()
                 .anyRequest().authenticated()
