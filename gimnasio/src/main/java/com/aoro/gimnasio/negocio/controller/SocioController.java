@@ -11,17 +11,17 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.aoro.gimnasio.negocio.dto.ResponseDto;
-import com.aoro.gimnasio.negocio.entity.CatProducto;
-import com.aoro.gimnasio.negocio.service.impl.CatalogoProductoServiceImpl;
+import com.aoro.gimnasio.negocio.entity.Socio;
+import com.aoro.gimnasio.negocio.service.impl.SocioServiceImpl;
 import com.aoro.gimnasio.negocio.util.Constants;
 
 @RestController
-@RequestMapping("/catproductos/")
-public class CatProductoController {
-	Logger logger = Logger.getLogger(CatProductoController.class.getName());
+@RequestMapping("/socios/")
+public class SocioController {
+	Logger logger = Logger.getLogger(SocioController.class.getName());
 
 	@Autowired
-	private CatalogoProductoServiceImpl catalogoProdService;
+	private SocioServiceImpl socioServiceImpl;
 
 	ResponseDto response;
 
@@ -31,7 +31,7 @@ public class CatProductoController {
 		try {
 			response.setCodigo(Constants.COD_SUCCESS);
 			response.setMessage(Constants.MSG_SUCCESS);
-			response.setData(catalogoProdService.getAll());
+			response.setData(socioServiceImpl.getAll());
 
 		} catch (Exception e) {
 			response.setCodigo(Constants.COD_ERROR);
@@ -47,7 +47,7 @@ public class CatProductoController {
 		try {
 			response.setCodigo(Constants.COD_SUCCESS);
 			response.setMessage(Constants.MSG_SUCCESS);
-			response.setData(catalogoProdService.getOne(id));
+			response.setData(socioServiceImpl.getOne(id));
 
 		} catch (Exception e) {
 			response.setCodigo(Constants.COD_ERROR);
@@ -58,23 +58,26 @@ public class CatProductoController {
 	}
 
 	@PostMapping("/saveUpdate")
-	public ResponseDto save(@RequestBody CatProducto catProd) {
+	public ResponseDto save(@RequestBody Socio socio) {
 		response = new ResponseDto();
 		try {
 			
-			logger.info("Ingresa saveUpdate->"+catProd.toString());
+			logger.info("Ingresa saveUpdate->"+socio.toString());
 			
-			CatProducto  catProdExist=catalogoProdService.findByCodigoBarras(catProd.getCodigo_barras());
-			logger.info("catProdExist ->"+catProdExist);
-			if(null!=catProdExist) {
-				if(null==catProd.getId()) { //alta
-					if(catProd.getCodigo_barras().equals(catProdExist.getCodigo_barras())) {
+			Socio  socioEx=socioServiceImpl.findByNombreApaternoAmaterno(socio);
+			logger.info("catProdExist ->"+socioEx);
+			if(null!=socioEx) {
+				if(null==socio.getId()) { //alta
+					if(socio.getApaterno().toUpperCase().equals(socioEx.getApaterno().toUpperCase())||
+							socio.getAmaterno().toUpperCase().equals(socioEx.getAmaterno().toUpperCase())||
+							socio.getNombre().toUpperCase().equals(socioEx.getNombre().toUpperCase())
+							) {
 						response.setCodigo(Constants.COD_CONFLICT);
 						response.setMessage(Constants.MSG_CONFLICT);
 						return response;
 					}
 				}else {
-					if(!catProd.getId().equals(catProdExist.getId())) {
+					if(!socio.getId().equals(socioEx.getId())) {
 						response.setCodigo(Constants.COD_CONFLICT);
 						response.setMessage(Constants.MSG_CONFLICT);
 						return response;
@@ -85,7 +88,7 @@ public class CatProductoController {
 			
 			response.setCodigo(Constants.COD_SUCCESS);
 			response.setMessage(Constants.MSG_SUCCESS);
-			response.setData(catalogoProdService.saveUpdate(catProd));
+			response.setData(socioServiceImpl.saveUpdate(socio));
 
 		} catch (Exception e) {
 			response.setCodigo(Constants.COD_ERROR);
@@ -96,12 +99,12 @@ public class CatProductoController {
 	}
 
 	@PostMapping("/delete")
-	public ResponseDto delete(@RequestBody CatProducto catProd) {
+	public ResponseDto delete(@RequestBody Socio socio) {
 		response = new ResponseDto();
 		try {
 			response.setCodigo(Constants.COD_SUCCESS);
 			response.setMessage(Constants.MSG_SUCCESS);
-			response.setData(catalogoProdService.delete(catProd));
+			response.setData(socioServiceImpl.delete(socio));
 
 		} catch (Exception e) {
 			response.setCodigo(Constants.COD_ERROR);
@@ -110,5 +113,6 @@ public class CatProductoController {
 		}
 		return response;
 	}
+
 
 }

@@ -2,6 +2,8 @@ package com.aoro.gimnasio.config.service.impl;
 
 import java.util.Date;
 import java.util.HashSet;
+import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 import java.util.Set;
 
@@ -152,6 +154,10 @@ public class AuthenticationServiceImpl implements AuthenticationService {
 		ubaja.setActivo(0);
 		userRepository.save(ubaja);
 		return true;
+	}
+	
+	public List<Map<String, Object>>  getAll() {
+		return userRepository.findUserSocios();
 	}
 
 }

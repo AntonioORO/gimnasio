@@ -51,7 +51,13 @@ public class SecurityConfiguration {
                 .antMatchers(POST, "/api/v1/auth/registrar").permitAll()
                 .antMatchers(POST, "/gimnasio/catproductos/saveUpdate").hasAnyAuthority("ADMIN")
                 .antMatchers(POST, "/gimnasio/catproductos/delete").hasAnyAuthority("ADMIN")
-                  
+                .antMatchers(POST, "/gimnasio/membresia/saveUpdate").hasAnyAuthority("ADMIN")
+                .antMatchers(POST, "/gimnasio/membresia/delete").hasAnyAuthority("ADMIN")
+                .antMatchers(POST, "/gimnasio/socios/saveUpdate").hasAnyAuthority("ADMIN")
+                .antMatchers(POST, "/gimnasio/socios/delete").hasAnyAuthority("ADMIN")
+                .antMatchers(POST, "/gimnasio/venta/ventaDiaria").hasAnyAuthority("ADMIN")
+                 
+                
                 .antMatchers("/gimnasio/api/v1/auth/**").permitAll()
                 .antMatchers("/login").permitAll()
                 .anyRequest().authenticated()

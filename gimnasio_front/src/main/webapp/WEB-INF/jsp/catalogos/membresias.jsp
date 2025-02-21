@@ -5,7 +5,7 @@
 		<div class="col-lg-8">
 			<div class="page-header-title">
 				<div class="d-inline">
-					<h4>Catálogo de productos</h4>
+					<h4>Catálogo de membresias</h4>
 				</div>
 			</div>
 		</div>
@@ -17,7 +17,7 @@
 					</a></li>
 					<li class="breadcrumb-item" style="float: left;"><a href="#!">Catálogos</a>
 					</li>
-					<li class="breadcrumb-item" style="float: left;"><a href="#!">Productos</a>
+					<li class="breadcrumb-item" style="float: left;"><a href="#!">Membresias</a>
 					</li>
 				</ul>
 			</div>
@@ -33,7 +33,7 @@
 			<div class="card-block">
 				<div class="col-sm-12">
 					<button class="btn btn-primary btn-outline-primary"
-						style="float: right;" onclick="nuevoProducto()">
+						style="float: right;" onclick="nuevaMembresia()">
 						<i class="fa fa-plus"></i>Nuevo
 					</button>
 					<br /> <br /> <br />
@@ -43,12 +43,9 @@
 						style="width: 100%;">
 						<thead>
 							<tr>
-								<th>Código</th>
+								<th>Meses</th>
 								<th>Descripción</th>
-								<th>Costo compra</th>
-								<th>Costo venta</th>
-								<th>Stock</th>
-								<th>Stock Minimo</th>
+								<th>Costo</th>
 								<th width="10px">Acción</th>
 							</tr>
 						</thead>
@@ -67,16 +64,16 @@
 
 		<div class="card">
 			<div class="card-header">
-				<h5 id="titleAddUpdate">Nuevo producto</h5>
+				<h5 id="titleAddUpdate">Nueva membresia</h5>
 			</div>
 			<div class="card-block">
 				<div class="row">
 					<div class="col-sm-4">
 						<div class="col-sm-12">
-							<label for="codigo-barras" class="form-label block">Código de barras (*):</label>
+							<label for="meses-membresia" class="form-label block">Meses (*):</label>
 						</div>
 						<div class="col-sm-12">
-							<input id="codigo-barras" name="codigo-barras" type="text" class=" form-control" maxlength="50" onkeypress="onlyNumbers()">
+							<input id="meses-membresia" name="meses-membresia" type="text" class=" form-control" maxlength="50" onkeypress="onlyNumbers()">
 						</div>
 					</div>
 					<div class="col-sm-4">
@@ -89,49 +86,21 @@
 					</div>
 					<div class="col-sm-4">
 						<div class="col-sm-12">
-							<label for="costo-compra" class="form-label block">Costo compra (*):</label>
+							<label for="costo-membresia" class="form-label block">Costo (*):</label>
 						</div>
 						<div class="col-sm-12">
-							<input id="costo-compra" name="costo-compra" type="text" class=" form-control" onkeypress='precios(event)'>
+							<input id="costo-membresia" name="costo-membresia" type="text" class=" form-control" onkeypress='precios(event)'>
 						</div>
 					</div>
-				</div>
-				<br>
-				<div class="row">
-					<div class="col-sm-4">
-						<div class="col-sm-12">
-							<label for="costo-venta" class="form-label block">Costo venta (*):</label>
-						</div>
-						<div class="col-sm-12">
-							<input id="costo-venta" name="costo-venta" type="text" class=" form-control" onkeypress='precios(event)'>
-						</div>
-					</div>
-					<div class="col-sm-4">
-						<div class="col-sm-12">
-							<label for="stock" class="form-label block">Stock (*):</label>
-						</div>
-						<div class="col-sm-12">
-							<input id="stock" name="costo-compra" type="text" class=" form-control" onkeypress="onlyNumbers()">
-						</div>
-					</div>
-					<div class="col-sm-4">
-						<div class="col-sm-12">
-							<label for="stock-minimo" class="form-label block">Stock minimo (*):</label>
-						</div>
-						<div class="col-sm-12">
-							<input id="stock-minimo" name="costo-compra" type="text" class=" form-control" onkeypress="onlyNumbers()">
-						</div>
-					</div>
-					
 				</div>
 				<br />
 				<br />
 				<div class="row">
 					<br /> <br />
 					<center>
-						<button onclick="listaProductos()" class="btn btn-primary btn-square">Cancelar</button>
+						<button onclick="listaMembresia()" class="btn btn-primary btn-square">Cancelar</button>
 						&nbsp; 
-						<button onclick="guardarProducto()"  class="btn btn-success btn-square">Guardar</button>
+						<button onclick="guardarMembresia()"  class="btn btn-success btn-square">Guardar</button>
 					</center>
 		
 				</div>
@@ -150,7 +119,7 @@
 	function getAll() {
 		preload();
 		$.ajax({
-					url : '${contextPath}/catalogo/producto/getAll',
+					url : '${contextPath}/catalogo/membresia/getAll',
 					type : 'GET',
 					dataType : 'json',
 					contentType : 'application/json',
@@ -163,22 +132,15 @@
 							$.each(arrProducts,function(index, value) {
 												contTabla += '<tr>';
 												contTabla += '<td>'
-														+ value.codigo_barras
+														+ value.meses
 														+ '</td>';
 												contTabla += '<td>'
 														+ value.descripcion
 														+ '</td>';
 												contTabla += '<td>'
-														+ value.costo_compra
+														+ value.costo
 														+ '</td>';
-												contTabla += '<td>'
-														+ value.costo_venta
-														+ '</td>';
-												contTabla += '<td>'
-														+ value.stock + '</td>';
-												contTabla += '<td>'
-														+ value.stock_minimo
-														+ '</td>';
+												
 												contTabla += '<td>';
 												contTabla += '<center>';
 												contTabla += '<button class="btn btn-primary btn-outline-primary fa fa-pencil"';
@@ -205,21 +167,19 @@
 
 	}
 
-	function guardarProducto(){
+	function guardarMembresia(){
 		
-		var cod=$('#codigo-barras').val();
+		var meses=$('#meses-membresia').val();
 		var des=$('#descripcion').val();
-		var cos=$('#costo-compra').val();
-		var cosvta=$('#costo-venta').val();
-		var stock=$('#stock').val();
-		var minstock=$('#stock-minimo').val();
-		if(cod==""||des==""||cos==""||cosvta==""||stock==""||minstock==""){
+		var cos=$('#costo-membresia').val();
+	
+		if(meses==""||des==""||cos==""){
 			swal("Información", "Los campos marcados con * son obligatorios.", "info");
 			
 		}else{
 			swal({
 				title: "Atención",
-				text: "Se dará de alta un nuevo producto, desea continuar",
+				text: "Se dará de alta la nueva membresia, desea continuar",
 				type: "warning",
 				showCancelButton: true,
 				confirmButtonClass: "btn-danger",
@@ -232,16 +192,14 @@
 				
 				var jsonData={
 					"id":idRegistro,	
-					"codigo_barras":cod,
+					"meses":meses,
 					"descripcion":des,
-					"costo_compra":cos,
-					"costo_venta":cosvta,
-					"stock":stock,
-					"stock_minimo":minstock
+					"costo":cos
+				
 					};
 				
 		    	$.ajax({
-		    	    url: '${contextPath}/catalogo/producto/saveUpdate',
+		    	    url: '${contextPath}/catalogo/membresia/saveUpdate',
 		    	    type: 'POST',
 		    	    data: JSON.stringify(jsonData),
 		    	    dataType: 'json',
@@ -250,16 +208,16 @@
 		    	    success: function (response) {
 		    	    	postload();
 		    	       if(response.codigo==0){
-		    	    	   swal("Completo", "Registro de producto exitoso.", "success");
-		    	    	   catalogoProductosIndex('catalogoProductos');
+		    	    	   swal("Completo", "Registro de membresia exitosa.", "success");
+		    	    	   catalogoProductosIndex('catalogoMembresias');
 		    	       }
 		    	       if(response.codigo==409){
-		    	    	   swal("Conflicto", "El código que trata de ingresar ya existe", "error");
+		    	    	   swal("Conflicto", "La membresia que trata de ingresar ya existe", "error");
 		    	       }
 		    	    },
 		    	    error: function () {
 		    	    	postload();
-		    	    	 swal("Error", "Error al registrar el producto", "error");
+		    	    	 swal("Error", "Error al registrar la membresia", "error");
 		    	    }
 		    	}); 
 				
@@ -267,17 +225,13 @@
 		}
 	}
 	
-	function nuevoProducto() {
+	function nuevaMembresia() {
 		idRegistro=null;
-		$('#titleAddUpdate').text("Nuevo producto");
+		$('#titleAddUpdate').text("Nueva membresia");
 		
-		$('#codigo-barras').val("");
+		$('#meses-membresia').val("");
 		$('#descripcion').val("");
-		$('#costo-compra').val("");
-		$('#costo-venta').val("");
-		$('#stock').val("");
-		$('#stock-minimo').val("");
-		
+		$('#costo-membresia').val("");
 		$('#row-get-all').hide();
 		$('#row-new').show();
 	}
@@ -289,7 +243,7 @@
 				};
 	  swal({
 			title: "Atención",
-			text: "Se eliminará el producto: "+nombre+", ¿ Desea continuar ?",
+			text: "Se eliminará la membresia: "+nombre+", ¿ Desea continuar ?",
 			type: "warning",
 			showCancelButton: true,
 			confirmButtonClass: "btn-danger",
@@ -300,7 +254,7 @@
 		function(){
 			preload();
 			$.ajax({
-	    	    url: '${contextPath}/catalogo/producto/delete',
+	    	    url: '${contextPath}/catalogo/membresia/delete',
 	    	    type: 'POST',
 	    	    data: JSON.stringify(jsonDelete),
 	    	    dataType: 'json',
@@ -310,15 +264,15 @@
 	    	    	postload();
 	    	       if(response.codigo==0){
 	    	    	   swal("Eliminación exitosa", "", "success");
-	    	    	   catalogoProductosIndex('catalogoProductos');
+	    	    	   catalogoProductosIndex('catalogoMembresias');
 	    	       }else{
-	    	    	   swal("Error", "Error al eliminar el producto", "error"); 
+	    	    	   swal("Error", "Error al eliminar la membresia", "error"); 
 	    	       }
 	    	       
 	    	    },
 	    	    error: function () {
 	    	     postload();
-	    	     swal("Error", "Error al eliminar el producto", "error");
+	    	     swal("Error", "Error al eliminar la membresia", "error");
 	    	    }
 	    	}); 
 			
@@ -337,24 +291,20 @@
 			}
 		});
 		
-		$('#titleAddUpdate').text("Modificar producto");
-		$('#codigo-barras').val(current.codigo_barras);
+		$('#titleAddUpdate').text("Modificar membresia");
+		$('#meses-membresia').val(current.meses);
 		$('#descripcion').val(current.descripcion);
-		$('#costo-compra').val(current.costo_compra);
-		$('#costo-venta').val(current.costo_venta);
-		$('#stock').val(current.stock);
-		$('#stock-minimo').val(current.stock_minimo);
+		$('#costo-membresia').val(current.costo);
+		
 		$('#row-get-all').hide();
 		$('#row-new').show();
 	}
 	
-	function listaProductos() {
-		$('#codigo-barras').val("");
+	function listaMembresia() {
+		$('#meses-membresia').val("");
 		$('#descripcion').val("");
-		$('#costo-compra').val("");
-		$('#costo-venta').val("");
-		$('#stock').val("");
-		$('#stock-minimo').val("");
+		$('#costo-membresia').val("");
+		
 		$('#row-get-all').show();
 		$('#row-new').hide();
 		}

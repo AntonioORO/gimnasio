@@ -1,4 +1,4 @@
-package com.aoro.gimnasio.megocio.service.impl;
+package com.aoro.gimnasio.negocio.service.impl;
 
 import java.util.Date;
 import java.util.List;

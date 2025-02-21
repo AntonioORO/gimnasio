@@ -57,6 +57,45 @@ public class ViewsController extends InterceptorSesion {
 		}
 		return "login";
 	}
+	@RequestMapping(value = { "/catalogoMembresias"}, method = RequestMethod.GET)
+	public String membresias(Model model, HttpSession session) {
+		if (sesionActiva(session)) {
+			logger.info("Sesion activa");
+			return "catalogos/membresias";
+		}
+		return "login";
+	}
+	
+	@RequestMapping(value = { "/catalogoSocios"}, method = RequestMethod.GET)
+	public String catalogoSocios(Model model, HttpSession session) {
+		if (sesionActiva(session)) {
+			logger.info("Sesion activa");
+			return "catalogos/socios";
+		}
+		return "login";
+	}
 
+	@RequestMapping(value = { "/ventaDiaria"}, method = RequestMethod.GET)
+	public String ventaDiaria(Model model, HttpSession session) {
+		if (sesionActiva(session)) {
+			logger.info("Sesion activa");
+			return "venta/diaria";
+		}
+		return "login";
+	}
+	
+	@RequestMapping(value = { "/dashpunto"}, method = RequestMethod.GET)
+	public String dashpunto(Model model, HttpSession session) {
+		if (sesionActiva(session)) {
+			logger.info("Sesion activa");
+			return "dashboard/puntoventa";
+		}
+		return "login";
+	}
+
+
+	
+	
+	
 
 }

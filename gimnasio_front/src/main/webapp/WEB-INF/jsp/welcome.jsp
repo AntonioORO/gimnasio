@@ -29,7 +29,9 @@
      <!-- Chartlist chart css -->
     <link rel="stylesheet" href="${contextPath}/bower_components/chartist/dist/chartist.css" type="text/css" media="all">
     <link rel="stylesheet" type="text/css" href="${contextPath}/assets/icon/font-awesome/css/font-awesome.min.css">
-   
+    <!-- Select 2 css -->
+    <link rel="stylesheet" href="${contextPath}/bower_components/select2/dist/css/select2.min.css" />
+     
      <!-- Data Table Css -->
     <!-- <link rel="stylesheet" type="text/css" href="${contextPath}/assets/pages/data-table/css/jquery.dataTables.min.css"> -->
     <link rel="stylesheet" type="text/css" href="${contextPath}/bower_components/datatables.net-bs4/css/dataTables.bootstrap4.min.css">
@@ -41,12 +43,23 @@
     <!-- themify-icons line icon -->
     <link rel="stylesheet" type="text/css" href="${contextPath}/assets/icon/themify-icons/themify-icons.css">
 
+
+     <!-- Multi Select css -->
+    <link rel="stylesheet" type="text/css"
+        href="${contextPath}/bower_components/bootstrap-multiselect/dist/css/bootstrap-multiselect.css" />
+    <link rel="stylesheet" type="text/css" href="${contextPath}/bower_components/multiselect/css/multi-select.css" />
+    <!-- Style.css -->
+    <link rel="stylesheet" type="text/css" href="${contextPath}/assets/css/style.css">
+    <link rel="stylesheet" type="text/css" href="${contextPath}/assets/css/jquery.mCustomScrollbar.css">
+
     <!-- ico font -->
     <link rel="stylesheet" type="text/css" href="${contextPath}/assets/icon/icofont/css/icofont.css">
     <!-- Style.css -->
     <link rel="stylesheet" type="text/css" href="${contextPath}/assets/css/style.css">
  	<!-- seetalert.css -->
     <link rel="stylesheet" type="text/css" href="${contextPath}/assets/css/sweetalert.css">
+  
+      
 </head>
 
 <body>
@@ -280,11 +293,36 @@
                                             </a>
                                         </li>
                                         <li class="">
-                                            <a href="venta.html">
+                                            <a onclick="catalogoProductosIndex('dashpunto')">
                                                 <span class="pcoded-mtext">Venta</span>
                                             </a>
                                         </li>
                                         
+                                    </ul>
+                                </li>
+                            </ul>
+                             <ul class="pcoded-item pcoded-left-item">
+                                <li class="pcoded-hasmenu">
+                                    <a href="javascript:void(0)">
+                                        <span class="pcoded-micon"><i class="feather icon-box"></i></span>
+                                        <span class="pcoded-mtext">Venta</span>
+                                    </a>
+                                    <ul class="pcoded-submenu">
+                                        <li class=" ">
+                                            <a  onclick="catalogoProductosIndex('ventaDiaria')">
+                                                <span class="pcoded-mtext">Venta diaria</span>
+                                            </a>
+                                        </li>
+                                         <li class=" ">
+                                            <a onclick="catalogoProductosIndex('catalogoProductos')">
+                                                <span class="pcoded-mtext"></span>
+                                            </a>
+                                        </li>
+                                        <li class=" ">
+                                            <a onclick="catalogoProductosIndex('catalogoSocios')">
+                                                <span class="pcoded-mtext">Socios</span>
+                                            </a>
+                                        </li>
                                     </ul>
                                 </li>
                             </ul>
@@ -296,24 +334,22 @@
                                     </a>
                                     <ul class="pcoded-submenu">
                                         <li class=" ">
-                                            <a href="mensualidad.html">
+                                            <a  onclick="catalogoProductosIndex('catalogoMembresias')">
                                                 <span class="pcoded-mtext">Mebresia</span>
                                             </a>
                                         </li>
                                          <li class=" ">
-                                            <a onclick="catalogoProductosIndex()">
+                                            <a onclick="catalogoProductosIndex('catalogoProductos')">
                                                 <span class="pcoded-mtext">Productos</span>
                                             </a>
                                         </li>
                                         <li class=" ">
-                                            <a href="socios.html">
+                                            <a onclick="catalogoProductosIndex('catalogoSocios')">
                                                 <span class="pcoded-mtext">Socios</span>
                                             </a>
                                         </li>
                                     </ul>
                                 </li>
-                                
-                                
                             </ul>
                            
                         </div>
@@ -337,6 +373,8 @@
         </div>
     </div>
   
+     <!-- Warning Section Ends -->
+    
      <!-- Warning Section Ends -->
     <!-- Required Jquery -->
     <script type="text/javascript" src="${contextPath}/bower_components/jquery/dist/jquery.min.js"></script>
@@ -375,6 +413,19 @@
     
     <script type="text/javascript" src="${contextPath}/assets/js/script.js"></script>
 
+       
+        <script type="text/javascript" src="${contextPath}/bower_components/jquery-i18next/jquery-i18next.min.js"></script>
+        <!-- Select 2 js -->
+        <script type="text/javascript" src="${contextPath}/bower_components/select2/dist/js/select2.full.min.js"></script>
+        <!-- Multiselect js -->
+        <script type="text/javascript" src="${contextPath}/bower_components/bootstrap-multiselect/dist/js/bootstrap-multiselect.js"></script>
+        <script type="text/javascript" src="${contextPath}/bower_components/multiselect/js/jquery.multi-select.js"></script>
+        <script type="text/javascript" src="${contextPath}/assets/js/jquery.quicksearch.js"></script>
+        <!-- Custom js -->
+        <script type="text/javascript" src="${contextPath}/assets/pages/advance-elements/select2-custom.js"></script>
+   
+       
+       
     <script>
  
     
@@ -382,10 +433,10 @@
         $(':button:contains("previous")').attr('disabled', 'disabled');
     }
     
-    function catalogoProductosIndex(){
-        preload();
+    function catalogoProductosIndex(path){
+    	preload();
         $.ajax({
-            url: '${contextPath}/catalogoProductos',
+            url: '${contextPath}/'+path,
             type: 'GET',
             dataType: "html",
             success: function (response) {
@@ -447,8 +498,22 @@
     	$('#msgDialogError').text(texto);
     	
     }
-    
-    document.body.style.zoom="90%";
+    function fechaActual(){
+    	 var date=new Date();
+         var anio=date.getFullYear();
+         var mes=date.getMonth()+1;
+         var dia=date.getDate();
+         
+         if(mes.toString().length==1){
+           mes="0"+mes;
+         }
+         
+         if(dia.toString().length==1){
+           dia="0"+dia;
+         }
+         return anio+"-"+mes+"-"+dia;
+    }
+   // document.body.style.zoom="90%";
        
     </script>
 

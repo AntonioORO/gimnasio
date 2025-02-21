@@ -11,17 +11,17 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.aoro.gimnasio.negocio.dto.ResponseDto;
-import com.aoro.gimnasio.negocio.entity.CatProducto;
-import com.aoro.gimnasio.negocio.service.impl.CatalogoProductoServiceImpl;
+import com.aoro.gimnasio.negocio.entity.Membresia;
+import com.aoro.gimnasio.negocio.service.impl.MembresiaServiceImpl;
 import com.aoro.gimnasio.negocio.util.Constants;
 
 @RestController
-@RequestMapping("/catproductos/")
-public class CatProductoController {
-	Logger logger = Logger.getLogger(CatProductoController.class.getName());
+@RequestMapping("/membresias/")
+public class MembresiaController {
+	Logger logger = Logger.getLogger(MembresiaController.class.getName());
 
 	@Autowired
-	private CatalogoProductoServiceImpl catalogoProdService;
+	private MembresiaServiceImpl membresiaService;
 
 	ResponseDto response;
 
@@ -31,7 +31,7 @@ public class CatProductoController {
 		try {
 			response.setCodigo(Constants.COD_SUCCESS);
 			response.setMessage(Constants.MSG_SUCCESS);
-			response.setData(catalogoProdService.getAll());
+			response.setData(membresiaService.getAll());
 
 		} catch (Exception e) {
 			response.setCodigo(Constants.COD_ERROR);
@@ -47,7 +47,7 @@ public class CatProductoController {
 		try {
 			response.setCodigo(Constants.COD_SUCCESS);
 			response.setMessage(Constants.MSG_SUCCESS);
-			response.setData(catalogoProdService.getOne(id));
+			response.setData(membresiaService.getOne(id));
 
 		} catch (Exception e) {
 			response.setCodigo(Constants.COD_ERROR);
@@ -58,17 +58,17 @@ public class CatProductoController {
 	}
 
 	@PostMapping("/saveUpdate")
-	public ResponseDto save(@RequestBody CatProducto catProd) {
+	public ResponseDto save(@RequestBody Membresia catProd) {
 		response = new ResponseDto();
 		try {
 			
 			logger.info("Ingresa saveUpdate->"+catProd.toString());
 			
-			CatProducto  catProdExist=catalogoProdService.findByCodigoBarras(catProd.getCodigo_barras());
+			Membresia  catProdExist=membresiaService.findByMeses(catProd.getMeses());
 			logger.info("catProdExist ->"+catProdExist);
 			if(null!=catProdExist) {
 				if(null==catProd.getId()) { //alta
-					if(catProd.getCodigo_barras().equals(catProdExist.getCodigo_barras())) {
+					if(catProd.getMeses()==catProdExist.getMeses()) {
 						response.setCodigo(Constants.COD_CONFLICT);
 						response.setMessage(Constants.MSG_CONFLICT);
 						return response;
@@ -85,7 +85,7 @@ public class CatProductoController {
 			
 			response.setCodigo(Constants.COD_SUCCESS);
 			response.setMessage(Constants.MSG_SUCCESS);
-			response.setData(catalogoProdService.saveUpdate(catProd));
+			response.setData(membresiaService.saveUpdate(catProd));
 
 		} catch (Exception e) {
 			response.setCodigo(Constants.COD_ERROR);
@@ -96,12 +96,12 @@ public class CatProductoController {
 	}
 
 	@PostMapping("/delete")
-	public ResponseDto delete(@RequestBody CatProducto catProd) {
+	public ResponseDto delete(@RequestBody Membresia catProd) {
 		response = new ResponseDto();
 		try {
 			response.setCodigo(Constants.COD_SUCCESS);
 			response.setMessage(Constants.MSG_SUCCESS);
-			response.setData(catalogoProdService.delete(catProd));
+			response.setData(membresiaService.delete(catProd));
 
 		} catch (Exception e) {
 			response.setCodigo(Constants.COD_ERROR);
