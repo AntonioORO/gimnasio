@@ -55,4 +55,10 @@ public class SociosService {
 
 	}
 
+	public ResponseGenericDto findByUserNames(SocioVo socioVo, HttpSession session, Model model) {
+		logger.info("findByUserNames "+ Constants.SOCIOS_FIND_FIND_USERNAMES);
+		String token = (String) session.getAttribute("token");
+		return loginRepository.callPost(socioVo, token, Constants.SOCIOS_FIND_FIND_USERNAMES);
+	}
+
 }

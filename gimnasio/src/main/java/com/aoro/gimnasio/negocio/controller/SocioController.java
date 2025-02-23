@@ -1,5 +1,7 @@
 package com.aoro.gimnasio.negocio.controller;
 
+import java.util.List;
+import java.util.Map;
 import java.util.logging.Logger;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -65,7 +67,7 @@ public class SocioController {
 			logger.info("Ingresa saveUpdate->"+socio.toString());
 			
 			Socio  socioEx=socioServiceImpl.findByNombreApaternoAmaterno(socio);
-			logger.info("catProdExist ->"+socioEx);
+			logger.info("socioExist ->"+socioEx);
 			if(null!=socioEx) {
 				if(null==socio.getId()) { //alta
 					if(socio.getApaterno().toUpperCase().equals(socioEx.getApaterno().toUpperCase())||
@@ -105,6 +107,28 @@ public class SocioController {
 			response.setCodigo(Constants.COD_SUCCESS);
 			response.setMessage(Constants.MSG_SUCCESS);
 			response.setData(socioServiceImpl.delete(socio));
+
+		} catch (Exception e) {
+			response.setCodigo(Constants.COD_ERROR);
+			response.setMessage(e.getMessage());
+			e.printStackTrace();
+		}
+		return response;
+	}
+
+	@PostMapping("/findByUserNames")
+	public ResponseDto findByUserNames(@RequestBody Socio socio) {
+		response = new ResponseDto();
+		try {
+			
+			logger.info("Ingresa findByUserName->"+socio.toString());
+			
+			List<Map<String, Object>>  listaSocios=socioServiceImpl.findByUserNames(socio);
+			logger.info("listaSocios ->"+listaSocios);
+			
+			response.setCodigo(Constants.COD_SUCCESS);
+			response.setMessage(Constants.MSG_SUCCESS);
+			response.setData(listaSocios);
 
 		} catch (Exception e) {
 			response.setCodigo(Constants.COD_ERROR);

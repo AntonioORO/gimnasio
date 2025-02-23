@@ -1,5 +1,6 @@
 package com.aoro.gimnasio.negocio.controller;
 
+import java.util.List;
 import java.util.logging.Logger;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -26,7 +27,7 @@ public class CatProductoController {
 	ResponseDto response;
 
 	@GetMapping("/getAll")
-	public ResponseDto getAll() {
+	public ResponseDto getAll( ) {
 		response = new ResponseDto();
 		try {
 			response.setCodigo(Constants.COD_SUCCESS);
@@ -48,6 +49,26 @@ public class CatProductoController {
 			response.setCodigo(Constants.COD_SUCCESS);
 			response.setMessage(Constants.MSG_SUCCESS);
 			response.setData(catalogoProdService.getOne(id));
+
+		} catch (Exception e) {
+			response.setCodigo(Constants.COD_ERROR);
+			response.setMessage(e.getMessage());
+			e.printStackTrace();
+		}
+		return response;
+	}
+	@PostMapping("/getByCode")
+	public ResponseDto getByCode(@RequestBody CatProducto catProd) {
+		response = new ResponseDto();
+		try {
+			response.setCodigo(Constants.COD_SUCCESS);
+			response.setMessage(Constants.MSG_SUCCESS);
+			
+			CatProducto c=catalogoProdService.findByCodigoBarras(catProd.getCodigo_barras());
+			if(null==c) {
+				throw new Exception("Sin objeto");
+			}
+			response.setData(c);
 
 		} catch (Exception e) {
 			response.setCodigo(Constants.COD_ERROR);
@@ -110,5 +131,24 @@ public class CatProductoController {
 		}
 		return response;
 	}
+	
+	
+	@GetMapping("/consultaUrielPrueba")
+	public ResponseDto consultaUrielPrueba() {
+		response = new ResponseDto();
+		try {
+			response.setCodigo(Constants.COD_SUCCESS);
+			response.setMessage(Constants.MSG_SUCCESS);
+			response.setData(catalogoProdService.consultaUrielPrueba());
+
+		} catch (Exception e) {
+			response.setCodigo(Constants.COD_ERROR);
+			response.setMessage(e.getMessage());
+			e.printStackTrace();
+		}
+		return response;
+	}
+	
+	
 
 }

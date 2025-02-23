@@ -51,4 +51,15 @@ public class CatProductosService {
 
 	}
 
+	public ResponseGenericDto getByCodigo(CatProductoVo catProd, HttpSession session, Model model) {
+		logger.info("Enviando "+ Constants.CAT_PRODUCTOS_GET_BY_CODE);
+		String token = (String) session.getAttribute("token");
+		UsuarioVo usuarioVo=(UsuarioVo) session.getAttribute("user");
+		catProd.setUsuario_crea(usuarioVo.getId());
+		catProd.setUsuario_modifica(usuarioVo.getId());
+		
+		return loginRepository.callPost(catProd, token, Constants.CAT_PRODUCTOS_GET_BY_CODE);
+
+	}
+
 }

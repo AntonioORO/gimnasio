@@ -18,10 +18,8 @@ import lombok.Data;
 
 public class Membresia {
 	
-	
 	public Membresia() {
 		super();
-		// TODO Auto-generated constructor stub
 	}
 	public Membresia(Long id, int meses, String descripcion, double costo, Integer usuario_crea,
 			Integer usuario_modifica, Date fecha_alta, Date fecha_modificacion, Integer activo) {

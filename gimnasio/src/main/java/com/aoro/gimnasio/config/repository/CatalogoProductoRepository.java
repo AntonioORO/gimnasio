@@ -18,5 +18,7 @@ public interface CatalogoProductoRepository extends JpaRepository<CatProducto, L
 	@Query("select c from CatProducto c where c.activo =1 and c.codigo_barras=:codigo ")
 	CatProducto findByCodigoBarras(@Param("codigo") String codigo );
 	
-
+	@Query("select c from CatProducto c where c.activo =1 and costo_venta=40")
+	List<CatProducto> consultaUrielPrueba();
+	
 }

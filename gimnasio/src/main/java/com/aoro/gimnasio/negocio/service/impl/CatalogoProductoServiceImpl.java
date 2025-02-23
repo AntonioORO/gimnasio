@@ -48,5 +48,8 @@ public class CatalogoProductoServiceImpl {
 	public CatProducto findByCodigoBarras(String codigo) {
 		return catProdRepository.findByCodigoBarras(codigo);
 	}
-	
+
+	public List<CatProducto> consultaUrielPrueba() {
+	  return catProdRepository.consultaUrielPrueba();
+	}
 }

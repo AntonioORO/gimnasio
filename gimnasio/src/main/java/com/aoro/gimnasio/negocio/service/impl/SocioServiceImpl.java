@@ -20,6 +20,7 @@ import com.aoro.gimnasio.negocio.entity.Membresia;
 import com.aoro.gimnasio.negocio.entity.Socio;
 import com.aoro.gimnasio.negocio.entity.Usuario;
 import com.aoro.gimnasio.negocio.entity.Venta;
+
 @Service
 public class SocioServiceImpl {
 	Logger logger = Logger.getLogger(SocioServiceImpl.class.getName());
@@ -33,9 +34,8 @@ public class SocioServiceImpl {
 	@Autowired
 	private MembresiaRepository membresiaRepository;
 
-	
-	public 	List<Map<String, Object>> getAll() {
-		List<Map<String, Object>> res= socioRepository.findAllActives();
+	public List<Map<String, Object>> getAll() {
+		List<Map<String, Object>> res = socioRepository.findAllActives();
 		logger.info(res.toString());
 		return res;
 	}
@@ -43,7 +43,7 @@ public class SocioServiceImpl {
 	public Socio getOne(Long id) {
 		return socioRepository.findById(id).get();
 	}
-	
+
 	@Transactional(rollbackOn = Exception.class)
 	public Socio saveUpdate(Socio socio) {
 		socio.setNombre(socio.getNombre().toUpperCase());
@@ -52,48 +52,60 @@ public class SocioServiceImpl {
 		socio.setFecha_alta(new Date());
 		socio.setFecha_modificacion(new Date());
 		socio.setActivo(1);
-	    
-		if(null==socio.getId()||socio.getId()==0) {
-			Venta v=new Venta();
+
+		if (null == socio.getId() || socio.getId() == 0) {
+			Venta v = new Venta();
 			v.setEstatus(1);
 			v.setFecha_venta(new Date());
 			v.setImporte(socio.getMembresia().getCosto());
-			Usuario uv=new Usuario();
+			Usuario uv = new Usuario();
 			uv.setId(socio.getUsuario_crea());
 			v.setUsuario_venta(uv);
-			v=ventaRepository.save(v);
-			
-			
-			Optional<Membresia> m=membresiaRepository.findById(socio.getMembresia().getId());
-			
-			DetalleVenta dv=new DetalleVenta();
+			v = ventaRepository.save(v);
+
+			Optional<Membresia> m = membresiaRepository.findById(socio.getMembresia().getId());
+
+			DetalleVenta dv = new DetalleVenta();
 			dv.setCantidad(1);
-			dv.setDescripcion("Membresia "+m.get().getDescripcion());
+			dv.setDescripcion("Membresia " + m.get().getDescripcion());
 			dv.setEstatus(1);
 			dv.setId_venta(v.getId());
 			dv.setTotal(socio.getMembresia().getCosto());
 			dv.setPrecio_unitario(socio.getMembresia().getCosto());
-			
+
 			detVentaRepository.save(dv);
 		}
 		return socioRepository.save(socio);
 	}
 
 	public boolean delete(Socio catProd) {
-		Socio cp=getOne(catProd.getId());
-		logger.info("Delete->"+cp.toString());
+		Socio cp = getOne(catProd.getId());
+		logger.info("Delete->" + cp.toString());
 		cp.setUsuario_modifica(catProd.getUsuario_modifica());
 		cp.setActivo(0);
-		logger.info("Send->"+cp);
+		logger.info("Send->" + cp);
 		socioRepository.save(cp);
 		return true;
 	}
-	
+
 	public Socio findByNombreApaternoAmaterno(Socio socio) {
 		socio.setNombre(socio.getNombre().toUpperCase());
 		socio.setApaterno(socio.getApaterno().toUpperCase());
 		socio.setAmaterno(socio.getAmaterno().toUpperCase());
-		return socioRepository.findByNombreApaternoAmaterno(socio.getNombre(),socio.getAmaterno(),socio.getApaterno());
+		return socioRepository.findByNombreApaternoAmaterno(socio.getNombre(), socio.getAmaterno(),
+				socio.getApaterno());
 	}
+
+	public List<Map<String, Object>> findByUserNames(Socio socio) {
+		
+		socio.setNombre(socio.getNombre()==null?"":socio.getNombre().toUpperCase());
+		socio.setApaterno(socio.getApaterno()==null?"":socio.getApaterno().toUpperCase());
+		socio.setNombre(socio.getNombre()==null?"":socio.getNombre().toUpperCase());
+			
+		List<Map<String, Object>> listaSocios = socioRepository.findByUserNames(socio.getNombre(),socio.getApaterno(),socio.getAmaterno());
+		return listaSocios;
+	}
+
+	
 
 }

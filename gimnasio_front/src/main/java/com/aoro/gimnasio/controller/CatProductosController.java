@@ -59,5 +59,18 @@ public class CatProductosController extends InterceptorSesion {
 		return resGenerica;
 
 	}
+	@PostMapping("/getByCode")
+	public ResponseGenericDto getByCode(@RequestBody CatProductoVo producto, Model model, HttpSession session) {
+		logger.info("delete " +producto.toString());
+		ResponseGenericDto resGenerica = new ResponseGenericDto();
+		resGenerica.setCodigo(-1);
+		if (sesionActiva(session)) {
+			resGenerica=catProdService.getByCodigo(producto, session, model);
+		}
+		return resGenerica;
+
+	}
+	
+	
 
 }

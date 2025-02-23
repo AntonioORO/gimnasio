@@ -48,6 +48,21 @@ public class SociosController extends InterceptorSesion {
 		return resGenerica;
 
 	}
+	
+	@PostMapping("/findByUserNames")
+	public ResponseGenericDto findByUserNames(@RequestBody SocioVo socioVo, Model model, HttpSession session) {
+		logger.info("findByUserNames " +socioVo.toString());
+		ResponseGenericDto resGenerica = new ResponseGenericDto();
+		resGenerica.setCodigo(-1);
+		if (sesionActiva(session)) {
+			resGenerica=sociosService.findByUserNames(socioVo, session, model);
+		}
+		return resGenerica;
+
+	}
+	
+	
+	
 	@PostMapping("/delete")
 	public ResponseGenericDto delete(@RequestBody SocioVo socioVo, Model model, HttpSession session) {
 		logger.info("delete " +socioVo.toString());

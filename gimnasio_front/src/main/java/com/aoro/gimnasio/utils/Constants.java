@@ -5,6 +5,7 @@ public class Constants {
 	public static final String URL_LOGIN = "/login";
 	///// catproductos
 	public static final String CAT_PRODUCTOS_GET_ALL = "/catproductos/getAll";
+	public static final String CAT_PRODUCTOS_GET_BY_CODE = "/catproductos/getByCode";
 	public static final String CAT_PRODUCTOS_SAVE_UPDATE = "/catproductos/saveUpdate";
 	public static final String CAT_PRODUCTOS_DELETE = "/catproductos/delete";
 	////// membresias
@@ -15,6 +16,9 @@ public class Constants {
 	public static final String SOCIOS_GET_ALL = "/socios/getAll";
 	public static final String SOCIOS_SAVE_UPDATE = "/socios/saveUpdate";
 	public static final String SOCIOS_DELETE = "/socios/delete";
+	public static final String SOCIOS_FIND_FIND_USERNAMES = "/socios/findByUserNames";
+	
+	
 	////// usuarios
 	public static final String USUARIOS_GET_ALL = "/usuarios/getAll";
 	public static final String USUARIOS_SAVE_UPDATE = "/usuarios/saveUpdate";
